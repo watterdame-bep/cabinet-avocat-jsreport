@@ -6,22 +6,12 @@ ENV NODE_ENV=production
 # Passer en root pour installer Chrome
 USER root
 
-# Mettre à jour les sources et installer les dépendances de base
-RUN apt-get update && apt-get install -y \
+# Installer Chrome et ses dépendances
+RUN apt-get update && \
+    apt-get install -y \
     wget \
-    curl \
     gnupg \
     ca-certificates \
-    apt-transport-https \
-    software-properties-common
-
-# Ajouter la clé GPG de Google et le repository Chrome
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg && \
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
-
-# Installer Chrome et toutes ses dépendances
-RUN apt-get update && apt-get install -y \
-    google-chrome-stable \
     fonts-liberation \
     libappindicator3-1 \
     libasound2 \
@@ -39,29 +29,14 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     libgbm1 \
     libnss3 \
-    libxshmfence1 \
-    libgconf-2-4 \
-    libxfixes3 \
-    libxinerama1 \
-    libgtk-3-0 \
-    libx11-xcb1 \
-    libxcb-dri3-0 \
-    libxtst6 \
-    libxrandr2 \
-    libasound2 \
-    libpangocairo-1.0-0 \
-    libatk1.0-0 \
-    libcairo-gobject2 \
-    libgtk-3-0 \
-    libgdk-pixbuf2.0-0 && \
+    libxshmfence1 && \
+    # Installer Google Chrome
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
     # Nettoyer le cache
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/* /tmp/*
-
-# Vérifier que Chrome est installé
-RUN google-chrome --version
-
-# Créer un lien symbolique pour s'assurer que Chrome est trouvé
-RUN ln -sf /usr/bin/google-chrome /usr/bin/chrome
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 # Revenir à l'utilisateur jsreport
 USER jsreport
@@ -75,13 +50,11 @@ COPY jsreport.config.json /app/jsreport.config.json
 # Définir le répertoire de travail
 WORKDIR /app
 
-# Variables d'environnement pour Puppeteer et Chrome
+# Variables d'environnement pour Puppeteer
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome
-ENV CHROME_BIN=/usr/bin/google-chrome
-ENV CHROME_PATH=/usr/bin/google-chrome
 
-# Exposer le port (Railway utilisera la variable $PORT)
+# Exposer le port
 EXPOSE 5488
 
 # Healthcheck pour Railway
