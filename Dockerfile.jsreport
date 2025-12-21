@@ -1,33 +1,23 @@
 FROM jsreport/jsreport:4.7.0
 
-# Variables d'environnement Railway
+# Variables d'environnement pour Railway
 ENV NODE_ENV=production
-ENV httpPort=${PORT:-5488}
 
-# Configuration de sécurité
-ENV trustUserCode=false
-ENV allowLocalFilesAccess=false
+# Créer les répertoires nécessaires pour le stockage
+RUN mkdir -p /app/data /app/data/blobs /app/logs
 
-# Configuration d'authentification
-ENV authentication_enabled=true
-ENV extensions_authentication_cookieSession_secret=${JSREPORT_COOKIE_SECRET:-default-secret}
+# Copier le fichier de configuration
+COPY jsreport.config.json /app/jsreport.config.json
 
-# Configuration de performance pour Railway
-ENV workers_numberOfWorkers=2
-ENV workers_timeout=120000
+# Définir le répertoire de travail
+WORKDIR /app
 
-# Configuration de stockage
-ENV store=fs
-ENV blobStorage=fs
-
-# Créer les répertoires nécessaires
-RUN mkdir -p /app/data /app/logs
-
-# Exposer le port Railway
-EXPOSE ${PORT:-5488}
+# Exposer le port (Railway utilisera la variable $PORT)
+EXPOSE 5488
 
 # Healthcheck pour Railway
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3   CMD curl -f http://localhost:${PORT:-5488}/api/ping || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:5488/api/ping || exit 1
 
-# Commande de démarrage
-CMD ["node", "server.js"]
+# Commande de démarrage avec le fichier de configuration
+CMD ["jsreport", "start", "--config=jsreport.config.json"]

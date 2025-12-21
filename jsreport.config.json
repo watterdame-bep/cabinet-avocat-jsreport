@@ -1,0 +1,46 @@
+{
+  "httpPort": 5488,
+  "store": {
+    "provider": "fs",
+    "dataDirectory": "/app/data"
+  },
+  "blobStorage": {
+    "provider": "fs",
+    "dataDirectory": "/app/data/blobs"
+  },
+  "authentication": {
+    "enabled": true,
+    "admin": {
+      "username": "admin",
+      "password": "admin123"
+    },
+    "cookieSession": {
+      "secret": "your-secret-key"
+    }
+  },
+  "extensions": {
+    "chrome-pdf": {
+      "launchOptions": {
+        "args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
+      }
+    },
+    "fs-store": {
+      "enabled": true
+    },
+    "authentication": {
+      "enabled": true
+    }
+  },
+  "workers": {
+    "numberOfWorkers": 2,
+    "timeout": 120000
+  },
+  "trustUserCode": false,
+  "allowLocalFilesAccess": false,
+  "logger": {
+    "console": {
+      "transport": "console",
+      "level": "info"
+    }
+  }
+}
