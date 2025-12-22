@@ -42,12 +42,13 @@ RUN mkdir -p /app/data
 # Copier les fichiers de configuration
 COPY jsreport.config.json /app/jsreport.config.json
 COPY start-jsreport.sh /app/start-jsreport.sh
+COPY test-import.sh /app/test-import.sh
 
 # Copier les templates JSReport (format .jsrexport)
 COPY export.jsrexport /app/export.jsrexport
 
-# Rendre le script exécutable
-RUN chmod +x /app/start-jsreport.sh
+# Rendre les scripts exécutables
+RUN chmod +x /app/start-jsreport.sh /app/test-import.sh
 
 USER jsreport
 
@@ -55,4 +56,4 @@ USER jsreport
 EXPOSE 5488
 
 # Utiliser le script de démarrage personnalisé
-CMD ["/app/start-jsreport.sh"]
+CMD ["/bin/bash", "/app/start-jsreport.sh"]
