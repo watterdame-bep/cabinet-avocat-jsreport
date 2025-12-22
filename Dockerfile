@@ -34,6 +34,10 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
 # Variables d'environnement pour Puppeteer
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 ENV PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox"
+ENV PUPPETEER_CACHE_DIR=/app/.puppeteer-cache
+
+# Créer le cache Puppeteer accessible
+RUN mkdir -p /app/.puppeteer-cache && chown -R jsreport:jsreport /app/.puppeteer-cache
 
 # Copier la configuration JSReport
 COPY jsreport.config.json /app/jsreport.config.json
