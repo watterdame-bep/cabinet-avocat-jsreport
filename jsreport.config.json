@@ -1,4 +1,7 @@
 {
+  "store": {
+    "provider": "fs"
+  },
   "chrome": {
     "launchOptions": {
       "executablePath": "/usr/bin/google-chrome-stable",
@@ -7,5 +10,6 @@
         "--disable-setuid-sandbox"
       ]
     }
-  }
+  },
+  "httpPort": 5488
 }

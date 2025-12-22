@@ -2,7 +2,7 @@ FROM jsreport/jsreport:4.7.0
 
 USER root
 
-# Installer Google Chrome
+# Installer Google Chrome avec toutes les dépendances
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     libcups2 \
     libdrm2 \
     libxkbcommon0 \
+    libxss1 \
     --no-install-recommends
 
 # Ajouter la clé GPG de Google et installer Chrome
