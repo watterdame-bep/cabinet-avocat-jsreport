@@ -55,5 +55,5 @@ USER jsreport
 # Exposer le port
 EXPOSE 5488
 
-# Utiliser le script de démarrage personnalisé
-CMD ["/bin/bash", "/app/start-jsreport.sh"]
+# Utiliser le démarrage par défaut (sera surchargé par Railway Start Command)
+CMD ["jsreport", "start"]
