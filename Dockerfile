@@ -44,7 +44,7 @@ COPY jsreport.config.json /app/jsreport.config.json
 COPY start-jsreport.sh /app/start-jsreport.sh
 
 # Copier les templates JSReport (format .jsrexport)
-COPY export.jsrexpor[t] /app/ 2>/dev/null || echo "export.jsrexport non trouvé - JSReport démarrera sans templates"
+COPY export.jsrexport /app/export.jsrexport
 
 # Rendre le script exécutable
 RUN chmod +x /app/start-jsreport.sh
