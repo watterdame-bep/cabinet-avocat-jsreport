@@ -2,10 +2,9 @@ FROM jsreport/jsreport:4.7.0
 
 USER root
 
-# Installer Google Chrome et curl
+# Installer Google Chrome
 RUN apt-get update && apt-get install -y \
     wget \
-    curl \
     gnupg \
     ca-certificates \
     fonts-liberation \
@@ -36,24 +35,10 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 ENV PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox"
 
-# Créer le dossier de données
-RUN mkdir -p /app/data
-
-# Copier les fichiers de configuration
+# Copier la configuration JSReport
 COPY jsreport.config.json /app/jsreport.config.json
-COPY start-jsreport.sh /app/start-jsreport.sh
-COPY test-import.sh /app/test-import.sh
-
-# Copier les templates JSReport (format .jsrexport)
-COPY export.jsrexport /app/export.jsrexport
-
-# Rendre les scripts exécutables
-RUN chmod +x /app/start-jsreport.sh /app/test-import.sh
 
 USER jsreport
 
 # Exposer le port
 EXPOSE 5488
-
-# Utiliser le démarrage par défaut (sera surchargé par Railway Start Command)
-CMD ["jsreport", "start"]
