@@ -7,9 +7,26 @@
       "executablePath": "/usr/bin/google-chrome-stable",
       "args": [
         "--no-sandbox",
-        "--disable-setuid-sandbox"
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--no-first-run"
       ]
     }
   },
-  "httpPort": 5488
+  "httpPort": 5488,
+  "authentication": {
+    "cookieSession": {
+      "secret": "votre-secret-jsreport"
+    },
+    "admin": {
+      "username": "admin",
+      "password": "votre-mot-de-passe-securise"
+    }
+  },
+  "extensions": {
+    "authentication": {
+      "enabled": true
+    }
+  }
 }
