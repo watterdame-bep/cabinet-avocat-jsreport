@@ -16,13 +16,15 @@
   },
   "httpPort": 5488,
   "authentication": {
-    "cookieSession": {
-      "secret": "votre-secret-jsreport"
-    },
-    "admin": {
-      "username": "admin",
-      "password": "votre-mot-de-passe-securise"
-    }
+  "cookieSession": {
+    "secret": "${JSREPORT_COOKIE_SECRET}"
+  },
+  "admin": {
+    "username": "${JSREPORT_ADMIN_USER}",
+    "password": "${JSREPORT_ADMIN_PASSWORD}"
+   }
+ }
+
   },
   "extensions": {
     "authentication": {
