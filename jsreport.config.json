@@ -1,10 +1,7 @@
 {
-  "store": {
-    "provider": "fs"
-  },
+  "store": { "provider": "fs" },
   "chrome": {
     "launchOptions": {
-      "executablePath": "/usr/bin/google-chrome-stable",
       "args": [
         "--no-sandbox",
         "--disable-setuid-sandbox",
@@ -16,19 +13,11 @@
   },
   "httpPort": 5488,
   "authentication": {
-  "cookieSession": {
-    "secret": "${JSREPORT_COOKIE_SECRET}"
-  },
-  "admin": {
-    "username": "${JSREPORT_ADMIN_USER}",
-    "password": "${JSREPORT_ADMIN_PASSWORD}"
-   }
- }
-
-  },
-  "extensions": {
-    "authentication": {
-      "enabled": true
+    "cookieSession": { "secret": "${JSREPORT_COOKIE_SECRET}" },
+    "admin": {
+      "username": "${JSREPORT_ADMIN_USER}",
+      "password": "${JSREPORT_ADMIN_PASSWORD}"
     }
-  }
+  },
+  "extensions": { "authentication": { "enabled": true } }
 }
