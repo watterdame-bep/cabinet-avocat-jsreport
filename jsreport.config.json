@@ -1,5 +1,7 @@
 {
-  "store": { "provider": "fs" },
+  "store": {
+    "provider": "fs"
+  },
   "chrome": {
     "launchOptions": {
       "args": [
@@ -11,13 +13,20 @@
       ]
     }
   },
+  "tempDirectory": "/app/tmp",
   "httpPort": 5488,
   "authentication": {
-    "cookieSession": { "secret": "${JSREPORT_COOKIE_SECRET}" },
+    "cookieSession": {
+      "secret": "${JSREPORT_COOKIE_SECRET}"
+    },
     "admin": {
       "username": "${JSREPORT_ADMIN_USER}",
       "password": "${JSREPORT_ADMIN_PASSWORD}"
     }
   },
-  "extensions": { "authentication": { "enabled": true } }
+  "extensions": {
+    "authentication": {
+      "enabled": true
+    }
+  }
 }
